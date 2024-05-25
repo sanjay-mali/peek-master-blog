@@ -3,10 +3,11 @@ import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import authService from "./appWrite/auth";
 import { login, logout } from "./store/authSlice";
-import Login from "./components/Login";
+import { Outlet } from "react-router-dom";
+import { Header, Footer } from "./components";
 
 function App() {
-  const [Loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -22,10 +23,14 @@ function App() {
       .finally(() => setLoading(false));
   }, []);
 
-  return !Loading ? (
-    <div className="h-screen flex flex-wrap content-between bg-slate-500">
+  return !loading ? (
+    <div className="min-h-screen flex flex-wrap content-between bg-slate-300">
       <div className="w-full block">
-        <h1>Hello World!!!!</h1>
+        <Header />
+        <main>
+          <Outlet />
+        </main>
+        <Footer />
       </div>
     </div>
   ) : null;
