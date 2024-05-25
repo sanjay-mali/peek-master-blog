@@ -34,7 +34,10 @@ function SignUp() {
       >
         <div className="mb-2 flex justify-center">
           <span className="inline-block w-full max-w-[100px]">
-            <Logo width="100%" />
+            <img
+              src="https://icons8.com/illustrations/author/zD2oqC8lLBBA"
+              alt=""
+            />
           </span>
         </div>
         <h2 className="text-center text-2xl font-bold leading-tight">
@@ -80,7 +83,6 @@ function SignUp() {
               placeholder="Enter your password"
               {...register("password", {
                 required: true,
-                minLength: 6,
               })}
             />
             <Button type="submit" className="w-full">

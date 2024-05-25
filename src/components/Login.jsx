@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import authService from "../appWrite/auth";
-import { login as loginService } from "../store/authSlice";
+import { login as loginReducer } from "../store/authSlice";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { InputBtn, Button } from "./index";
@@ -17,10 +17,11 @@ function Login() {
     try {
       const session = await authService.Login(data);
       if (session) {
-        const currentUser = await authService.getCurrentUser();
-
-        if (currentUser) dispatch(loginService(user));
-        navigate("/");
+        const userData = await authService.getCurrentUser();
+        if (userData) {
+          dispatch(loginReducer(userData));
+          navigate("/");
+        }
       }
     } catch (error) {
       setError(error.message);
@@ -77,7 +78,6 @@ function Login() {
               placeholder="Password"
               {...register("password", {
                 required: true,
-                minLength: 6,
               })}
             />
             <Button type="submit" className="w-full">
