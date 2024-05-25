@@ -11,22 +11,26 @@ export class StorageService {
         this.databases = new Databases(this.client);
         this.storage = new Storage(this.client);
     }
-    async createPost({ title, content, slug, image, status, userId }) {
+
+    async createPost({ title, content, slug, image, status, userid }) {
         try {
-            return await this.databases.createDocument(
+            const response = await this.databases.createDocument(
                 config.appWriteDatabaseId,
                 config.appWriteCollectionId,
+                slug,
                 {
                     title,
                     content,
-                    slug,
                     image,
                     status,
-                    userId
+                    userid,
                 }
             )
+            console.log("response " + response)
+            console.log("User id - " + userid)
+            return response
         } catch (error) {
-            throw error
+            console.log("Appwrite serive :: createPost :: error", error);
         }
     }
 
@@ -44,7 +48,7 @@ export class StorageService {
                 }
             )
         } catch (error) {
-            throw error
+            console.log("Appwrite serive :: updatePost :: error", error);
         }
     }
 
@@ -62,13 +66,14 @@ export class StorageService {
 
     async getPost(slug) {
         try {
-            return await this.database.getDocument(
+            return await this.databases.getDocument(
                 config.appWriteDatabaseId,
                 config.appWriteCollectionId,
                 slug
             )
         } catch (error) {
-            throw error
+            console.log("Appwrite serive :: getPost :: error", error);
+            return false
         }
     }
 
@@ -86,7 +91,11 @@ export class StorageService {
 
     async uploadFile(file) {
         try {
-            return await this.storage.createFile(file)
+            return await this.storage.createFile(
+                config.appWriteBucketId,
+                ID.unique(),
+                file
+            )
         } catch (error) {
             throw error
         }
@@ -100,11 +109,14 @@ export class StorageService {
         }
     }
 
-    async getFilePreview(fileId) {
+    getFilePreview(fileId) {
         try {
-            return await this.storage.getFilePreview(fileId)
+            return this.storage.getFilePreview(
+                config.appWriteBucketId,
+                fileId
+            )
         } catch (error) {
-            throw error
+            console.log("Appwrite service :: getFilePreview :: error", error.message)
         }
     }
 

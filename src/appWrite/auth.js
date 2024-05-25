@@ -1,5 +1,5 @@
 import { Client, Account, ID } from 'appwrite'
-import config from '../config/config.js'
+import config from '../config/config';
 
 export class AuthService {
     client = new Client()
@@ -12,6 +12,7 @@ export class AuthService {
 
         this.account = new Account(this.client)
     }
+
     async createAccount({ email, password, name }) {
         try {
             const userAccount = await this.account.create(ID.unique(), email, password, name)
@@ -29,7 +30,7 @@ export class AuthService {
 
     async Login({ email, password }) {
         try {
-            return await this.account.createEmailSession(email, password)
+            return await this.account.createEmailPasswordSession(email, password)
         } catch (error) {
             throw error
         }
@@ -45,11 +46,10 @@ export class AuthService {
 
     async getCurrentUser() {
         try {
-            return await this.account.get()
+            return await this.account.get();
         } catch (error) {
-            throw error
+            throw new Error(`Failed to get current user: ${error.message}`);
         }
-        return null
     }
 }
 
