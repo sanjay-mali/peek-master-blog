@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import storageService from "../appWrite/storage";
 import parse from "html-react-parser";
 
-function PostCard({ $id, title, image, content,author }) {
+function PostCard({ $id, title, image, content }) {
   return (
     <Link to={`/post/${$id}`}>
       <div className="w-full bg-[#f2f2f2] my-4 rounded-md p-2 md:p-4 lg:p-6">
@@ -20,11 +20,6 @@ function PostCard({ $id, title, image, content,author }) {
         <div className="break-words text-sm md:text-base lg:text-lg text-gray-500 text-left">
           {parse(content ? content.slice(0, 50) + "..." : "")}
         </div>
-        {author && (
-            <p className="text-sm text-gray-500">
-              Written by: {author}
-            </p>
-          )}
       </div>
     </Link>
   );
