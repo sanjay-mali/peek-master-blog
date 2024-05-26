@@ -11,5 +11,7 @@ import Login from "./Login";
 import Signup from "./SignUp";
 import PostForm from "./post-form/PostForm";
 import AuthLayout from "./AuthLayout";
+import LoadingSpinner from "./LoadingSpinner";
+import ShimmerPostCard from "./ShimmerPostCard";
 
-export { Button, Container, Footer, Header, InputBtn, LogoutBtn, PostCard, Select, RichTextEditor, Login, Signup, PostForm, AuthLayout };
+export { Button, Container, Footer, Header, InputBtn, LogoutBtn, PostCard, Select, RichTextEditor, Login, Signup, PostForm, AuthLayout, LoadingSpinner, ShimmerPostCard };
