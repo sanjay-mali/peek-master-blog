@@ -1,4 +1,4 @@
-import React, { act } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { Container, LogoutBtn } from "../index";
@@ -6,6 +6,11 @@ import { Container, LogoutBtn } from "../index";
 function Header() {
   const navigate = useNavigate();
   const authStatus = useSelector((state) => state.auth.status);
+  // const [showMenu, setShowMenu] = useState(false);
+
+  // const toggleMenu = () => {
+  //   setShowMenu(!showMenu);
+  // };
 
   const navItems = [
     {
@@ -39,6 +44,7 @@ function Header() {
       active: !authStatus,
     },
   ];
+  // #2b2f37 --dark mode
 
   return (
     <>
@@ -75,3 +81,31 @@ function Header() {
 }
 
 export default Header;
+
+{
+  /* <button
+              className="block md:hidden ml-auto px-4 py-2 text-black focus:outline-none"
+              onClick={toggleMenu}
+            >
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M4 6h16M4 12h16m-7 6h7"
+                />
+              </svg>
+            </button> 
+<ul
+  className={`flex-col md:flex-row md:flex ml-auto absolute top-full bg-white mt-2 md:mt-0 md:relative md:top-auto md:bg-transparent ${
+    showMenu ? "flex" : "hidden"
+  } transition duration-300 ease-in-out sm:w-[100%]`}
+></ul>;
+*/
+}

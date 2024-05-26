@@ -16,10 +16,9 @@ function PostForm({ post }) {
       },
     });
 
-  const userData = useSelector((state) => state.auth.userData);
+  const {userData} = useSelector((state) => state.auth.userData);
   const navigate = useNavigate();
-  const userId = userData.userData.$id;
-  
+
   const submit = async (data) => {
     if (post) {
       const file = data.image[0]
@@ -30,7 +29,7 @@ function PostForm({ post }) {
         appWriteServeice.deleteFile(post.image);
       }
 
-      const newPost = appWriteServeice.createPost(post.$id, {
+      const newPost = appWriteServeice.updatePost(post.$id, {
         ...data,
         image: file ? file.$id : undefined,
       });
@@ -38,19 +37,16 @@ function PostForm({ post }) {
         navigate(`/post/${newPost.$id}`);
       }
     } else {
-      const file = data.image[0]
-        ? await appWriteServeice.uploadFile(data.image[0])
-        : null;
+      const file = await appWriteServeice.uploadFile(data.image[0]);
 
       if (file) {
         const fileId = file.$id;
         data.image = fileId;
         const newPost = await appWriteServeice.createPost({
           ...data,
-          userid: userId,
+          userid: userData.$id,
         });
         if (newPost) {
-          console.log(newPost.$id)
           navigate(`/post/${newPost.$id}`);
           return appWriteServeice.getFilePreview(fileId);
         }
@@ -114,7 +110,7 @@ function PostForm({ post }) {
           type="file"
           className="mb-4"
           accept="image/png, image/jpeg, image/jpg, image/gif"
-          {...register("image", { required: !post })}
+          {...register("image", { required: true })}
         />
         {post && (
           <div className="w-full mb-4">

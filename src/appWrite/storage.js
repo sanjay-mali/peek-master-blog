@@ -12,9 +12,9 @@ export class StorageService {
         this.storage = new Storage(this.client);
     }
 
-    async createPost({ title, content, slug, image, status, userid }) {
+    async createPost({ title, slug, content, image, status, userid }) {
         try {
-            const response = await this.databases.createDocument(
+            return await this.databases.createDocument(
                 config.appWriteDatabaseId,
                 config.appWriteCollectionId,
                 slug,
@@ -26,13 +26,11 @@ export class StorageService {
                     userid,
                 }
             )
-            console.log("response " + response)
-            console.log("User id - " + userid)
-            return response
         } catch (error) {
             console.log("Appwrite serive :: createPost :: error", error);
         }
     }
+
 
     async updatePost(slug, { title, content, image, status }) {
         try {
@@ -72,22 +70,35 @@ export class StorageService {
                 slug
             )
         } catch (error) {
-            console.log("Appwrite serive :: getPost :: error", error);
-            return false
-        }
-    }
-
-    async getPosts(queries = [Query.equal("status", "active")]) {
-        try {
-            return await this.databases.listDocuments(
-                config.appWriteDatabaseId,
-                config.appWriteCollectionId,
-                queries
-            )
-        } catch (error) {
             throw error
         }
     }
+
+    // async getPosts(queries = [Query.equal("status", "active")]) {
+    //     try {
+    //         return await this.databases.listDocuments(
+    //             config.appWriteDatabaseId,
+    //             config.appWriteCollectionId,
+    //             queries
+    //         )
+    //     } catch (error) {
+    //         throw error
+    //     }
+    // }
+
+    async getPosts() {
+    try {
+        const posts = await this.databases.listDocuments(
+            config.appWriteDatabaseId,
+            config.appWriteCollectionId
+        );
+        return posts; // Assuming the response contains the posts in a 'documents' field
+    } catch (error) {
+        console.error("Appwrite service :: getAllPosts :: error", error);
+        return [];
+    }
+}
+
 
     async uploadFile(file) {
         try {
