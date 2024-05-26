@@ -4,16 +4,18 @@ import authService from "../appWrite/auth";
 import { login as loginService } from "../store/authSlice";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
-import { InputBtn, Button } from "./index";
+import { InputBtn, Button, LoadingSpinner } from "./index";
 
 function SignUp() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const { register, handleSubmit } = useForm();
 
   const createAccount = async (data) => {
     setError("");
+    setLoading(true);
     try {
       const session = await authService.createAccount(data);
       if (session) {
@@ -26,6 +28,8 @@ function SignUp() {
       }
     } catch (error) {
       setError(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -87,8 +91,12 @@ function SignUp() {
                 required: true,
               })}
             />
-            <Button type="submit" className="w-full">
-              Sign Up
+            <Button
+              type="submit"
+              className="w-full"
+              disabled={loading}
+            >
+              {loading ? <LoadingSpinner /> : "Sign Up"}
             </Button>
           </div>
         </form>

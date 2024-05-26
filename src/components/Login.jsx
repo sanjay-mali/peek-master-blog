@@ -4,16 +4,18 @@ import authService from "../appWrite/auth";
 import { login as loginReducer } from "../store/authSlice";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
-import { InputBtn, Button } from "./index";
+import { InputBtn, Button, LoadingSpinner } from "./index";
 
 function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const { register, handleSubmit } = useForm();
 
   const onLoginClick = async (data) => {
     setError("");
+    setLoading(true);
     try {
       const session = await authService.Login(data);
       if (session) {
@@ -24,7 +26,9 @@ function Login() {
         }
       }
     } catch (error) {
-      setError(error.message);
+      setError("Invalid email or password");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -33,6 +37,7 @@ function Login() {
       <div
         className={`mx-auto w-full max-w-lg bg-gray-100 rounded-xl p-10 border border-black/10`}
       >
+        {loading && <LoadingSpinner />}
         <div className="mb-2 flex justify-center">
           <span className="inline-block w-full max-w-[100px]">
             <img
@@ -80,8 +85,8 @@ function Login() {
                 required: true,
               })}
             />
-            <Button type="submit" className="w-full">
-              Sign In
+            <Button type="submit" className="w-full" disabled={loading}>
+              {loading ? <LoadingSpinner /> : "Sign In"}
             </Button>
           </div>
         </form>
