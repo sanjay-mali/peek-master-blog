@@ -46,7 +46,8 @@ function HomePage() {
                     <ShimmerPostCard />
                   </div>
                 ))
-            : posts.map((post) => (
+            : posts &&
+              posts.map((post) => (
                 <div
                   key={post.$id}
                   className="p-2 w-full sm:w-1/2 md:w-1/3 lg:w-1/4"
