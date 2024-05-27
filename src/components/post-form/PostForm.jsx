@@ -2,7 +2,13 @@ import React, { useCallback, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import appWriteServeice from "../../appWrite/storage";
-import { Button, InputBtn, RichTextEditor, Select } from "../index";
+import {
+  Button,
+  InputBtn,
+  RichTextEditor,
+  Select,
+  LoadingSpinner,
+} from "../index";
 import { useNavigate } from "react-router-dom";
 
 function PostForm({ post }) {
@@ -16,10 +22,12 @@ function PostForm({ post }) {
       },
     });
 
-  const {userData} = useSelector((state) => state.auth.userData);
+  const [loading, setLoading] = useState(false);
+  const { userData } = useSelector((state) => state.auth.userData);
   const navigate = useNavigate();
 
   const submit = async (data) => {
+    setLoading(true);
     if (post) {
       const file = data.image[0]
         ? await appWriteServeice.uploadFile(data.image[0])
@@ -133,8 +141,9 @@ function PostForm({ post }) {
           type="submit"
           bgColor={post ? "bg-green-500" : undefined}
           className="w-full"
+          disabled={loading}
         >
-          {post ? "Update" : "Submit"}
+          {loading ? <LoadingSpinner /> : post ? "Update" : "Submit"}
         </Button>
       </div>
     </form>
