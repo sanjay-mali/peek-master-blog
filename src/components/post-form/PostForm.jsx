@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import appWriteServeice from "../../appWrite/storage";
@@ -70,7 +70,7 @@ function PostForm({ post }) {
         .replace(/[^a-zA-Z\d\s]+/g, "-")
         .replace(/\s/g, "-");
     }
-    return "";
+    return "";  
   });
 
   useEffect(() => {
@@ -84,8 +84,8 @@ function PostForm({ post }) {
   }, [watch, setValue, slugTrasform]);
 
   return (
-    <form onSubmit={handleSubmit(submit)} className="flex flex-wrap">
-      <div className="w-2/3 px-2">
+    <form onSubmit={handleSubmit(submit)} className="md:flex md:flex-wrap sm:inline-block">
+      <div className="md:w-2/3 md:px-2 sm:w-full sm:m-auto ">
         <InputBtn
           label="Title"
           name="title"

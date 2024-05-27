@@ -1,16 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { Container, LogoutBtn } from "../index";
+import Logo from "../../assets/logo.png";
 
 function Header() {
   const navigate = useNavigate();
   const authStatus = useSelector((state) => state.auth.status);
-  // const [showMenu, setShowMenu] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
 
-  // const toggleMenu = () => {
-  //   setShowMenu(!showMenu);
-  // };
+  const toggleMenu = () => {
+    setShowMenu(!showMenu);
+  };
 
   const navItems = [
     {
@@ -47,36 +48,70 @@ function Header() {
   // #2b2f37 --dark mode
 
   return (
-    <>
-      <header className="py-3 shadow bg-[#fdfdfd]">
-        <Container>
-          <nav className="flex">
-            <div className="mr-4">
-              <Link to="/" className="text-white text-2xl font-bold"></Link>
-            </div>
-            <ul className="flex ml-auto">
-              {navItems.map((item) =>
-                item.active ? (
-                  <li key={item.name}>
-                    <button
-                      onClick={() => navigate(item.path)}
-                      className="inline-bock px-6 py-2 duration-200 text-black hover:text-white mx-2 hover:bg-[#313538] rounded-md border border-black border-1"
-                    >
-                      {item.name}
-                    </button>
-                  </li>
-                ) : null
-              )}
-              {authStatus && (
-                <li>
-                  <LogoutBtn />
+    <header className="py-3 shadow bg-[#fdfdfd]">
+      <Container>
+        <nav className="flex items-center justify-between mx-2">
+          <div className="flex-shrink-0">
+            <Link to="/" className="text-2xl font-bold">
+              <img src={Logo} alt="logo" className="w-32" />
+            </Link>
+          </div>
+          <div className="hidden md:flex items-center space-x-2 ml-auto">
+            {navItems.map((item) =>
+              item.active ? (
+                <button
+                  key={item.name}
+                  onClick={() => navigate(item.path)}
+                  className="px-6 py-2 duration-200 text-black hover:text-white hover:bg-[#313538] rounded-md border border-black"
+                >
+                  {item.name}
+                </button>
+              ) : null
+            )}
+            {authStatus && <LogoutBtn />}
+          </div>
+          <div className="md:hidden">
+            <button onClick={toggleMenu} aria-label="Toggle Menu">
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 6h16M4 12h16m-7 6h7"
+                />
+              </svg>
+            </button>
+          </div>
+        </nav>
+        {showMenu && (
+          <ul className="md:hidden mt-2 space-y-2">
+            {navItems.map((item) =>
+              item.active ? (
+                <li key={item.name}>
+                  <button
+                    onClick={() => navigate(item.path)}
+                    className="block m-auto w-[90%] px-6 py-2 duration-200 text-black hover:text-white hover:bg-[#313538] rounded-md border border-black"
+                  >
+                    {item.name}
+                  </button>
                 </li>
-              )}
-            </ul>
-          </nav>
-        </Container>
-      </header>
-    </>
+              ) : null
+            )}
+            {authStatus && (
+              <li className="m-auto w-[90%] px-6 py-2">
+                <LogoutBtn />
+              </li>
+            )}
+          </ul>
+        )}
+      </Container>
+    </header>
   );
 }
 
