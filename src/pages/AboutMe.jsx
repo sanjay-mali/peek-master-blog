@@ -1,4 +1,5 @@
 import React from "react";
+import Image from '../assets/3d-man.jpg';
 
 const AboutMe = () => {
   return (
@@ -43,7 +44,7 @@ const AboutMe = () => {
         </div>
         <div className="flex-1">
           <img
-            src="src/assets/3d-man.jpg"
+            src={Image}
             alt="3D Representation"
             className="w-full h-auto rounded-lg shadow-lg"
           />
