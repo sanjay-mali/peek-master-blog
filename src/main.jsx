@@ -14,6 +14,7 @@ import {
   AddPost,
   EditPost,
   Post,
+  AboutMe,
 } from "./pages/index.js";
 
 const routes = createBrowserRouter([
@@ -68,6 +69,10 @@ const routes = createBrowserRouter([
             <AddPost />
           </AuthLayout>
         ),
+      },
+      {
+        path: "/about",
+        element: <AboutMe />,
       },
     ],
   },
