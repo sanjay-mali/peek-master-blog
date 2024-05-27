@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 
 function Footer() {
   return (
-    <footer className="absolute bottom-0">
-      <h3 className="text-center text-md  m-auto w-2/4  flex items-center text-white  ">
+    <footer>
+      <h3 className="text-center  text-md  m-auto w-2/4  flex justify-center items-center text-black  ">
         Copyright &copy; {new Date().getFullYear()} BlogApp
       </h3>
     </footer>
