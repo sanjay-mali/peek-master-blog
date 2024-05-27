@@ -43,7 +43,7 @@ const AboutMe = () => {
         </div>
         <div className="flex-1">
           <img
-            src="/src/assets/3d-man.jpg"
+            src="src/assets/3d-man.jpg"
             alt="3D Representation"
             className="w-full h-auto rounded-lg shadow-lg"
           />
