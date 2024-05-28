@@ -42,7 +42,7 @@ function PostForm({ post }) {
         image: file ? file.$id : undefined,
       });
       if (newPost) {
-        navigate(`/post/${newPost.$id}`);
+        navigate(`/all-post`);
       }
     } else {
       const file = await appWriteServeice.uploadFile(data.image[0]);
