@@ -1,4 +1,4 @@
-# Project Name
+# Peek Master React App
 
 Welcome to the peek master blog repository. This project is designed to provide a comprehensive and user-friendly solution for managing user authentication and session management using Appwrite. The project leverages Appwrite's powerful backend services to handle user accounts, authentication, and other related tasks efficiently. It includes features for user registration, login, and CRUD (Create, Read, Update, Delete) operations on user data.
 
